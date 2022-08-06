@@ -12,7 +12,7 @@ from trayan.utils import cached_property
 
 
 class Translator(BaseTranslator):
-    def detect(self, text: str, hints: Optional[Iterable[str]] = None) -> Language:
+    def detect(self, text: str, hints: Optional[Iterable[str]] = None) -> str:
         resp = self._api_req(
             RequestMethod.GET,
             ApiMethod.DETECT,

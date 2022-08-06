@@ -13,7 +13,7 @@ from ..utils import cached_property
 
 
 class AsyncTranslator(BaseTranslator):
-    async def detect(self, text: str, hints: Optional[Iterable[str]] = None) -> Language:
+    async def detect(self, text: str, hints: Optional[Iterable[str]] = None) -> str:
         resp = await self._api_req(
             RequestMethod.GET,
             ApiMethod.DETECT,
