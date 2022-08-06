@@ -91,10 +91,7 @@ class Translator(BaseTranslator):
             except PermissionError:
                 ...
             return sid
-        try:
-            return self._get_cache()
-        except PermissionError:
-            return self._gen_sid()
+        return self._get_cache()
 
     @property
     def id(self) -> str:

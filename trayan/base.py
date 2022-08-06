@@ -39,6 +39,9 @@ class BaseTranslator:
         return f'-{randint(0, 9)}-0'
 
     def _check_cache(self) -> bool:
-        return os.path.exists(self._CACHE_PATH) & \
-               os.path.isfile(self._CACHE_PATH) & \
-               ((time() - os.path.getmtime(self._CACHE_PATH)) < 60 * 60 * 24 * 4)
+        if os.path.exists(self._CACHE_PATH):
+            try:
+                return os.path.isfile(self._CACHE_PATH) & \
+                       ((time() - os.path.getmtime(self._CACHE_PATH)) < 60 * 60 * 24 * 4)
+            except PermissionError:
+                ...

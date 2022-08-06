@@ -92,10 +92,7 @@ class AsyncTranslator(BaseTranslator):
             except PermissionError:
                 ...
             return sid
-        try:
-            return await self._get_cache()
-        except PermissionError:
-            return await self._gen_sid()
+        return await self._get_cache()
 
     @property
     async def id(self) -> str:
