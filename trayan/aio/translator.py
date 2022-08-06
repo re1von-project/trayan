@@ -121,7 +121,7 @@ class AsyncTranslator(BaseTranslator):
                 'Accept-Encoding': 'gzip, deflate, br',
             }
         )
-        if sid := self._sid_reg_exp.findall(resp.text('utf-8')):
+        if sid := self._sid_reg_exp.findall(await resp.text('utf-8')):
             return '.'.join(i[::-1] for i in sid[0].split('.'))
         raise SidParseError()
 
