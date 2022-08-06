@@ -7,7 +7,12 @@ awesome free asynchronous translator for python
 ## Usage
 ```python
 async def use():
-    from trayan import Translator, AsyncTranslator, detect, translate, async_detect, async_translate
+    from trayan import (
+        Translator, AsyncTranslator,
+        detect, translate,
+        async_detect, async_translate,
+        get_supported_langs
+    )
     from trayan.models.translator import Language
 
     proxy = None  # 'scheme://ip:port'
@@ -27,6 +32,10 @@ async def use():
 
     print(f'{ru} — {await async_detect(ru)}')
     print(f'ru-en — {await async_translate(ru)}')
+
+    print(f'поддерживаемые языки: {Translator.supported_langs}')
+
+    print(f'supported langs: {get_supported_langs()}')
 
 
 if __name__ == '__main__':

@@ -1,15 +1,111 @@
 import os
 import re
+from base64 import b64decode
 from random import randint
 from time import time
-from typing import Optional, Iterable
+from typing import Optional, Iterable, Dict
 
 import pyuser_agent
 
 
 class BaseTranslator:
-    BASE_SITE_URL = 'https://translate.yandex.ru/'
-    BASE_API_URL = 'https://translate.yandex.net/api/v1/tr.json/'
+    BASE_SITE_URL = b64decode(b'aHR0cHM6Ly90cmFuc2xhdGUueWFuZGV4LnJ1Lw==').decode('utf-8')
+    BASE_API_URL = b64decode(b'aHR0cHM6Ly90cmFuc2xhdGUueWFuZGV4Lm5ldC9hcGkvdjEvdHIuanNvbi8=').decode('utf-8')
+    SUPPORTED_LANGS = {
+        'az': 'Azerbaijani',
+        'ml': 'Malayalam',
+        'sq': 'Albanian',
+        'mt': 'Maltese',
+        'am': 'Amharic',
+        'mk': 'Macedonian',
+        'en': 'English',
+        'mi': 'Maori',
+        'ar': 'Arabic',
+        'mr': 'Marathi',
+        'hy': 'Armenian',
+        'mhr': 'Mari',
+        'af': 'Afrikaans',
+        'mn': 'Mongolian',
+        'eu': 'Basque',
+        'de': 'German',
+        'ba': 'Bashkir',
+        'ne': 'Nepalese',
+        'be': 'Belarusian',
+        'no': 'Norwegian',
+        'bn': 'Bengal',
+        'pa': 'Punjabi',
+        'my': 'Burmese',
+        'pap': 'Papiamento',
+        'bg': 'Bulgarian',
+        'fa': 'Persian',
+        'bs': 'Bosnian',
+        'pl': 'Polish',
+        'cy': 'Welsh',
+        'pt': 'Portuguese',
+        'hu': 'Hungarian',
+        'ro': 'Romanian',
+        'vi': 'Vietnamese',
+        'ru': 'Russian',
+        'ht': 'Haitian (Creole)',
+        'ceb': 'Cebuano',
+        'gl': 'Galician',
+        'sr': 'Serbian',
+        'nl': 'Dutch',
+        'si': 'Sinhalese',
+        'mrj': 'Hill Mari',
+        'sk': 'Slovak',
+        'el': 'Greek',
+        'sl': 'Slovenian',
+        'ka': 'Georgian',
+        'sw': 'Swahili',
+        'gu': 'Gujarati',
+        'su': 'Sundanese',
+        'da': 'Danish',
+        'tg': 'Tajik',
+        'he': 'Hebrew',
+        'th': 'Thai',
+        'yi': 'Yiddish',
+        'tl': 'Tagalog',
+        'id': 'Indonesian',
+        'ta': 'Tamil',
+        'ga': 'Irish',
+        'tt': 'Tartar',
+        'it': 'Italian',
+        'te': 'Telugu',
+        'is': 'Icelandic',
+        'tr': 'Turkish',
+        'es': 'Spanish',
+        'udm': 'Udmurt',
+        'kk': 'Kazakh',
+        'uz': 'Uzbek',
+        'kn': 'Kannada',
+        'uk': 'Ukrainian',
+        'ca': 'Catalan',
+        'ur': 'Urdu',
+        'ky': 'Kirghiz',
+        'fi': 'Finnish',
+        'zh': 'Chinese',
+        'fr': 'French',
+        'ko': 'Korean',
+        'hi': 'Hindi',
+        'xh': 'Xhosa',
+        'hr': 'Croatian',
+        'km': 'Khmer',
+        'cs': 'Czech',
+        'lo': 'Laotian',
+        'sv': 'Swedish',
+        'la': 'Latin',
+        'gd': 'Scottish',
+        'lv': 'Latvian',
+        'et': 'Estonian',
+        'lt': 'Lithuanian',
+        'eo': 'Esperanto',
+        'lb': 'Luxembourg',
+        'jv': 'Javanese',
+        'mg': 'Malagasy',
+        'ja': 'Japanese',
+        'ms': 'Malay'
+    }
 
     USER_AGENT = pyuser_agent.UA()
 
@@ -37,6 +133,15 @@ class BaseTranslator:
     @property
     def suffix(self) -> str:
         return f'-{randint(0, 9)}-0'
+
+    @classmethod
+    @property
+    def supported_langs(cls) -> Dict[str, str]:
+        return cls.SUPPORTED_LANGS
+
+    @classmethod
+    def get_supported_langs(cls) -> Dict[str, str]:
+        return cls.supported_langs
 
     def _check_cache(self) -> bool:
         if os.path.exists(self._CACHE_PATH):
