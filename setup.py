@@ -11,7 +11,7 @@ with open('README.md', 'r') as readme_file:
 
 setup(
     name='trayan',
-    version='0.1.1',
+    version='0.1.2',
     author='re1von',
     author_email='re1von@bk.ru',
     url='https://github.com/re1von-project/trayan',
