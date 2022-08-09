@@ -6,3 +6,4 @@ requests[socks]
 aiohttp==3.8.1
 aiohttp-socks==0.7.1
 aiofiles==0.8.0
+pyuser-agent==0.1.0
